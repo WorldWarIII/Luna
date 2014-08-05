@@ -1,4 +1,0 @@
-Luna
-====
-
-Hotel reception app
