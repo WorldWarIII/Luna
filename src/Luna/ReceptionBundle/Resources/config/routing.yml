@@ -1,0 +1,4 @@
+luna_room:
+    type: rest
+    prefix: /
+    resource: Luna\ReceptionBundle\Controller\RoomController

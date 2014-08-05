@@ -1,0 +1,12 @@
+#luna_user:
+#    resource: "@LunaUserBundle/Controller/"
+#    type:     annotation
+#    prefix:   /
+
+luna_reception:
+    resource: "@LunaReceptionBundle/Resources/config/routing.yml"
+    prefix:   /
+
+luna_user:
+    resource: "@LunaUserBundle/Resources/config/routing.yml"
+    prefix:   /
