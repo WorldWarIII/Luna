@@ -20,7 +20,10 @@
         "incenteev/composer-parameter-handler": "~2.0",
         "friendsofsymfony/user-bundle": "~2.0@dev",
         "friendsofsymfony/rest-bundle": "dev-master",
-        "jms/serializer-bundle": "dev-master"
+        "jms/serializer-bundle": "dev-master",
+        "oyejorge/less.php": "~1.5",
+        "twitter/bootstrap": "*",
+        "components/jquery": "dev-master"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3"

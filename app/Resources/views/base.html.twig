@@ -5,19 +5,34 @@
         <title>{% block title %}Welcome!{% endblock %}</title>
 
         {% block stylesheets %}
-            {% stylesheets 'bundles/lunauser/css/*' filter='cssrewrite, uglifycss' combine=true     %}
-            <link rel="stylesheet" href="{{ asset_url }}">
+            {% stylesheets 'bundles/lunauser/css/*' '@bootstrap_less' combine=true %}
+            <link href="{{ asset_url }}" type="text/css" rel="stylesheet" />
             {% endstylesheets %}
         {% endblock %}
 
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>
-        {% block body %}{% endblock %}
+        <div class="container">
+            <div class="hero-unit">
+                <h1>Luna Hotel</h1>
+                <p>Reception app</p>
+            </div>
+            <div class="row">
+                <div class="span12">
+                    {% block body %}{% endblock %}
+                </div>
+            </div>
+
+            <footer>
+                <p>&copy; Luna {{ '' | date('Y') }}</p>
+            </footer>
+
+        </div>
+
         {% block javascripts %}
-            {% javascripts '@LunaUserBundle/Resources/public/js/*' filter='uglifyjs' combine=true  %}
-                 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-                 <script type="text/javascript" src="{{ asset_url }}"></script>
+            {% javascripts '@jquery_js' '@bootstrap_js' filter='?yui_js' combine=true %}
+            <script src="{{ asset_url }}"></script>
             {% endjavascripts %}
         {% endblock %}
     </body>

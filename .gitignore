@@ -13,3 +13,4 @@
 /web/uploads/*
 /web/bundles/*
 /.idea/*
+app/Resources/java/*
