@@ -1,0 +1,22 @@
+services:
+    luna.menu_builder:
+        class: Luna\ApplicationBundle\Menu\Builder
+        arguments: ["@knp_menu.factory", "@security.context"]
+
+    luna.main.menu:
+        class: Knp\Menu\MenuItem # the service definition requires setting the class
+        factory_service: luna.menu_builder
+        factory_method: createMainMenu
+        arguments: ["@request"]
+        scope: request # needed as we have the request as a dependency here
+        tags:
+            - { name: knp_menu.menu, alias: main_menu } # The alias is what is used to retrieve the menu
+
+    luna.sub.menu:
+        class: Knp\Menu\MenuItem # the service definition requires setting the class
+        factory_service: luna.menu_builder
+        factory_method: createSubMenu
+        arguments: ["@request"]
+        scope: request # needed as we have the request as a dependency here
+        tags:
+            - { name: knp_menu.menu, alias: sub_menu } # The alias is what is used to retrieve the menu

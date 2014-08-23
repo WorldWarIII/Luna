@@ -12,5 +12,6 @@
 /composer.phar
 /web/uploads/*
 /web/bundles/*
+/web/assetic/*
 /.idea/*
 app/Resources/java/*

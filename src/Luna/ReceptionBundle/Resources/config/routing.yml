@@ -1,3 +1,13 @@
+luna_home:
+    path: /
+    defaults:  { _controller: LunaReceptionBundle:Dashboard:home }
+    methods: [GET]
+
+luna_reception_home:
+    path: /reception
+    defaults:  { _controller: LunaReceptionBundle:Reception:home }
+    methods: [GET]
+
 luna_room:
     type: rest
     prefix: /

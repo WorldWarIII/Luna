@@ -1,0 +1,32 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+
+    <form>
+        <select>
+            <option value="#">Select user</option>
+            {% for user in users %}
+               <option value="{{ user.id }}">{{ user.username }}</option>
+            {% endfor %}
+        </select>
+
+        {% for module_key,module in modules %}
+        <ul>
+            <li>
+                <input type="checkbox" name="{{ module_key }}" id="tall">
+                <label for="{{ module_key }}">{{ module_key }}</label>
+
+                {% for submodule in module %}
+                <ul>
+                    <li>
+                        <input type="checkbox" name="{{ submodule }}" id="tall">
+                        <label for="{{ submodule }}">{{ submodule }}</label>
+                    </li>
+                </ul>
+                {% endfor %}
+            </li>
+        </ul>
+        {% endfor %}
+
+    </form>
+{% endblock %}

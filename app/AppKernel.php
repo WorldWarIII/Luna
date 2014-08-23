@@ -19,12 +19,11 @@ class AppKernel extends Kernel
             new JMS\SerializerBundle\JMSSerializerBundle(),
             new FOS\UserBundle\FOSUserBundle(),
             new FOS\RestBundle\FOSRestBundle(),
-
+            new Knp\Bundle\MenuBundle\KnpMenuBundle(),
 
             new Luna\UserBundle\LunaUserBundle(),
-            new Luna\ReceptionBundle\LunaReceptionBundle()
-
-
+            new Luna\ReceptionBundle\LunaReceptionBundle(),
+            new Luna\ApplicationBundle\LunaApplicationBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

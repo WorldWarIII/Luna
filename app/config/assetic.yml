@@ -35,6 +35,7 @@ assetic:
             - '%kernel.root_dir%/../vendor/twitter/bootstrap/js/carousel.js'
 #            - '%kernel.root_dir%/../vendor/twitter/bootstrap/js/typeahead.js'
             - '%kernel.root_dir%/../vendor/twitter/bootstrap/js/affix.js'
+            - '%kernel.root_dir%/../web/bundles/lunauser/js/*'
         filters: [?yui_js]
     bootstrap_less:
         inputs:

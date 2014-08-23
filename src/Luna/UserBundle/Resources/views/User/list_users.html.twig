@@ -1,0 +1,16 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <th>Username</th>
+            <th>Email</th>
+                {% for user in users %}
+                    <tr>
+                        <td>{{ user.username }}</td>
+                        <td>{{ user.email }}</td>
+                    </tr>
+                {% endfor %}
+        </table>
+    </div>
+{% endblock %}

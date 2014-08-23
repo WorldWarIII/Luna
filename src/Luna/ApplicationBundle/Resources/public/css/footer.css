@@ -1,0 +1,11 @@
+#footer_wrap {
+    background-color: #9D223F;
+    position: fixed;
+    bottom: 0;
+}
+#copyright {
+    padding: 8px 0 10px 0;
+    font-size: 0.86em;
+    text-align: center;
+    color: #E9ECF1;
+}

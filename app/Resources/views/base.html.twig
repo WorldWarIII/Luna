@@ -1,39 +1,46 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8" />
-        <title>{% block title %}Welcome!{% endblock %}</title>
+<head>
+    <meta charset="UTF-8"/>
+    <title>{% block title %}Welcome!{% endblock %}</title>
 
-        {% block stylesheets %}
-            {% stylesheets 'bundles/lunauser/css/*' '@bootstrap_less' combine=true %}
-            <link href="{{ asset_url }}" type="text/css" rel="stylesheet" />
-            {% endstylesheets %}
-        {% endblock %}
+    {% block stylesheets %}
+        {% stylesheets 'bundles/lunauser/css/*' 'bundles/lunaapplication/css/*' '@bootstrap_less' combine=true %}
+        <link href="{{ asset_url }}" type="text/css" rel="stylesheet"/>
+        {% endstylesheets %}ss
+    {% endblock %}
 
-        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
-    </head>
-    <body>
-        <div class="container">
-            <div class="hero-unit">
-                <h1>Luna Hotel</h1>
-                <p>Reception app</p>
-            </div>
-            <div class="row">
-                <div class="span12">
-                    {% block body %}{% endblock %}
-                </div>
-            </div>
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
+</head>
+<body>
+<header class="col-md-12" id="header_wrap">
+    {% block header %}
+        {{ include('::header.html.twig') }}
+    {% endblock %}
+</header>
 
-            <footer>
-                <p>&copy; Luna {{ '' | date('Y') }}</p>
-            </footer>
+{% block main_menu %}
+    {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+        {{ knp_menu_render('main_menu') }}
+    {% endif %}
+{% endblock %}
 
-        </div>
 
-        {% block javascripts %}
-            {% javascripts '@jquery_js' '@bootstrap_js' filter='?yui_js' combine=true %}
-            <script src="{{ asset_url }}"></script>
-            {% endjavascripts %}
-        {% endblock %}
-    </body>
+{% block body %}
+
+{% endblock %}
+
+
+<footer class="col-md-12" id="footer_wrap">
+    {% block footer %}
+        {{ include('::footer.html.twig') }}
+    {% endblock %}
+</footer>
+
+{% block javascripts %}
+    {% javascripts '@jquery_js' '@bootstrap_js' filter='?yui_js' combine=false %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}
+</body>
 </html>

@@ -1,0 +1,39 @@
+#header_wrap {
+    background-color: #9D223F;
+}
+/*#header {*/
+    /*width: 900px;*/
+    /*margin: auto;*/
+    /*min-height: 120px;*/
+/*}*/
+
+#logo {
+    float: left;
+    font-family: 'Droid Sans', sans-serif;
+    font-weight: 700;
+    font-size: 2.8em;
+    line-height: 0.9em;
+    letter-spacing: -0.03em;
+    color: #00387e;
+    margin: 0px;
+    padding-top: 5px;
+}
+
+#header a {
+    text-decoration: none;
+    color: #00387e;
+}
+#header a img:hover {
+    opacity: 0.8;
+}
+
+#welcome-wrap{
+    width: 200px;
+    float: right;
+    margin: 10px;
+}
+
+input[type="checkbox"]{
+    -webkit-appearance: checkbox;
+    box-sizing: border-box;
+}

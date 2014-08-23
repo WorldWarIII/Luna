@@ -1,8 +1,3 @@
-#luna_user:
-#    resource: "@LunaUserBundle/Controller/"
-#    type:     annotation
-#    prefix:   /
-
 luna_reception:
     resource: "@LunaReceptionBundle/Resources/config/routing.yml"
     prefix:   /

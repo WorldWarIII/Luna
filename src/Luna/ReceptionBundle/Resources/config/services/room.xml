@@ -1,41 +1,8 @@
 <?xml version="1.0" ?>
 
 <container xmlns="http://symfony.com/schema/dic/services"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
-
-    <parameters>
-        <parameter key="luna.room.service.class">Luna\ReceptionBundle\Handler\RoomService</parameter>
-        <parameter key="luna.room.doctrine.repository">Luna\ReceptionBundle\Repository\RoomDoctrineRepository</parameter>
-        <parameter key="luna.room.class">Luna\ReceptionBundle\Entity\Room</parameter>
-    </parameters>
-
-    <services>
-        <!-- Exposed services -->
-        <service id="luna.room.repository" alias="luna.room.repository.doctrine"></service>
-        <service id="luna.room.service"    alias="luna.room.service.doctrine"></service>
-
-
-        <!-- Concrete Implementations -->
-        <service id="luna.room.repository.doctrine" public="false" class="%luna.room.doctrine.repository%">
-            <argument type="service" id="doctrine.orm.entity_manager" />
-            <argument>%luna.room.class%</argument>
-        </service>
-
-        <service id="luna.room.service.doctrine" public="false" class="%luna.room.service.class%">
-            <argument type="service" id="event_dispatcher" />
-            <argument type="service" id="luna.room.repository.doctrine" />
-        </service>
-
-        <!-- Events -->
-        <!--<service id="luna.subscriber.room" class="Luna\ReceptionBundle\EventListener\RoomCreatedListener" >-->
-            <!--<argument type="service" id="service_container" />-->
-            <!--<argument type="service" id="mailer" />-->
-            <!--<argument type="service" id="logger" />-->
-            <!--<tag name="kernel.event_listener" event="luna.room.created" method="onroomCreated" />-->
-        <!--</service>-->
-
-    </services>
 
 </container>

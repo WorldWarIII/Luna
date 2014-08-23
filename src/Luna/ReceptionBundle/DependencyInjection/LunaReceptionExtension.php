@@ -24,5 +24,6 @@ class LunaReceptionExtension extends Extension
 
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config/services'));
         $loader->load('room.xml');
+        $loader->load('repository.xml');
     }
 }

@@ -8,12 +8,35 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 class UserController extends Controller
 {
-    /**
-     * @Route("/hello/{name}")
-     * @Template()
-     */
-    public function indexAction($name)
+    public function listUsersAction()
     {
-        return array('name' => $name);
+        $users = $this->container->get('fos_user.user_manager')->findUsers();
+        return $this->render(
+            'LunaUserBundle:User:list_users.html.twig',
+            array("users" => $users)
+        );
+    }
+
+    public function manageUserModulesAction()
+    {
+        $em = $this->container->get('doctrine.orm.entity_manager');
+        $modulesEntity = $em->getRepository('LunaUserBundle:Module')
+                            ->findAllModules();
+
+        foreach ($modulesEntity as $module) {
+
+            $modules[$module->getName()] = [];
+
+            foreach($module->getSubModules() as $subModule){
+                $modules[$module->getName()][] =  $subModule->getName();
+            }
+        }
+
+        $users = $this->container->get('fos_user.user_manager')->findUsers();
+
+        return $this->render(
+            'LunaUserBundle:Module:manage_modules.html.twig',
+            array("users" => $users, "modules" => $modules)
+        );
     }
 }

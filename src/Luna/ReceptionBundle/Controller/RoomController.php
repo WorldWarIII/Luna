@@ -19,7 +19,7 @@ use FOS\RestBundle\View\RedirectView;
 
 class RoomController extends FOSRestController
 {
-    const ROOMS_SERVICE = 'luna.room.service';
+    const ROOM_REPOSITORY = 'luna.reception.room.repository';
 
     /**
      * List all rooms.
@@ -38,7 +38,7 @@ class RoomController extends FOSRestController
         $offset = null == $offset ? 0 : $offset;
         $limit = $paramFetcher->get('limit');
 
-        return $this->container->get(self::ROOMS_SERVICE)->findAll($limit, $offset);
+        return $this->container->get(self::ROOM_REPOSITORY)->findAll($limit, $offset);
     }
 
     /**
@@ -81,8 +81,8 @@ class RoomController extends FOSRestController
         $room = $this->processRoomForm(new Room(), $request, 'POST');
 
         try {
-            $room = $this->container->get(self::ROOMS_SERVICE)
-                ->saveRoom($room)
+            $room = $this->container->get(self::ROOM_REPOSITORY)
+                ->save($room)
             ;
 
             return $room;
@@ -102,8 +102,8 @@ class RoomController extends FOSRestController
     {
         $room = $this->getOr404($id);
 
-        $this->container->get(self::ROOMS_SERVICE)
-                        ->removeRoom($room)
+        $this->container->get(self::ROOM_REPOSITORY)
+                        ->delete($room)
         ;
         //return new View($data=null, $statusCode=Response::HTTP_NO_CONTENT);
         return $room;
@@ -122,20 +122,20 @@ class RoomController extends FOSRestController
     public function putRoomAction(Request $request, $id)
     {
         try {
-            if (!($room = $this->container->get(self::ROOMS_SERVICE)->findById($id))) {
+            if (!($room = $this->container->get(self::ROOM_REPOSITORY)->findById($id))) {
 
                 //$statusCode = Codes::HTTP_CREATED;
                 $room = $this->processRoomForm(new Room(), $request, 'POST');
-                $room = $this->container->get(self::ROOMS_SERVICE)
-                                        ->saveRoom($room)
+                $room = $this->container->get(self::ROOM_REPOSITORY)
+                                        ->save($room)
                 ;
 
             } else {
 
                 //$statusCode = Codes::HTTP_NO_CONTENT;
                 $room = $this->processRoomForm($room, $request, 'PUT');
-                $room = $this->container->get(self::ROOMS_SERVICE)
-                                        ->saveRoom($room)
+                $room = $this->container->get(self::ROOM_REPOSITORY)
+                                        ->save($room)
                 ;
             }
             return $room;
@@ -162,8 +162,8 @@ class RoomController extends FOSRestController
             $room = $this->getOr404($id);
             $room = $this->processRoomForm($room, $request, 'PATCH');
 
-            $room = $this->container->get(self::ROOMS_SERVICE)
-                                    ->saveRoom($room)
+            $room = $this->container->get(self::ROOM_REPOSITORY)
+                                    ->save($room)
             ;
             return $room;
         } catch (InvalidFormException $exception) {
@@ -184,7 +184,7 @@ class RoomController extends FOSRestController
      */
     protected function getOr404($id)
     {
-        if (!($room = $this->container->get(self::ROOMS_SERVICE)->findById($id))) {
+        if (!($room = $this->container->get(self::ROOM_REPOSITORY)->findById($id))) {
             throw new NotFoundHttpException(sprintf('The resource \'%s\' was not found.',$id));
         }
 
@@ -195,6 +195,7 @@ class RoomController extends FOSRestController
      * @param Room $room
      * @param Request $request
      * @param string $method
+     * @throws InvalidFormException
      * @return Room
      */
     private function processRoomForm(Room $room, Request $request, $method = 'PUT')

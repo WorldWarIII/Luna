@@ -1,3 +1,69 @@
+#footer_wrap {
+    background-color: #9D223F;
+    position: fixed;
+    bottom: 0;
+}
+#copyright {
+
+    padding: 8px 0 10px 0;
+    font-size: 0.86em;
+    text-align: center;
+    color: #E9ECF1;
+}
+#header_wrap {
+    background-color: #9D223F;
+}
+/*#header {*/
+    /*width: 900px;*/
+    /*margin: auto;*/
+    /*min-height: 120px;*/
+/*}*/
+
+#logo {
+    float: left;
+    font-family: 'Droid Sans', sans-serif;
+    font-weight: 700;
+    font-size: 2.8em;
+    line-height: 0.9em;
+    letter-spacing: -0.03em;
+    color: #00387e;
+    margin: 0px;
+    padding-top: 5px;
+}
+
+#header a {
+    text-decoration: none;
+    color: #00387e;
+}
+#header a img:hover {
+    opacity: 0.8;
+}
+
+.navbar-custom {
+    background-color: #EB961E;
+    border-top: 2px solid cornflowerblue;
+    border-bottom: 2px solid cornflowerblue;
+}
+
+#welcome-wrap{
+    width: 200px;
+    float: right;
+    margin: 10px;
+}
+
+
+ul {
+    list-style: none;
+    margin: 5px 20px;
+}
+li {
+    margin: 0 0 5px 0;
+}
+input[type="checkbox"]{
+    -webkit-appearance: checkbox;
+    box-sizing: border-box;
+}
+
 .form-signin
 {
     max-width: 330px;
