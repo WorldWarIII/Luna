@@ -2,6 +2,7 @@
     background-color: #9D223F;
     position: fixed;
     bottom: 0;
+    height: 60px;
 }
 #copyright {
     padding: 8px 0 10px 0;

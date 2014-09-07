@@ -1,3 +1,7 @@
+luna_cost_management:
+    resource: "@LunaCostManagementBundle/Resources/config/routing.yml"
+    prefix:   /
+
 luna_reception:
     resource: "@LunaReceptionBundle/Resources/config/routing.yml"
     prefix:   /

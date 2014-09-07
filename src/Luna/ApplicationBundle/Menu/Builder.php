@@ -33,8 +33,8 @@ class Builder
         $modules = $user->getUserModules();
 
         $menu = $this->factory->createItem('root');
-        $menu->setChildrenAttribute('class', 'nav nav-tabs nav-justified');
-        $menu->setChildrenAttribute('role', 'tablist');
+        $menu->setChildrenAttribute('class', 'nav nav-sidebar');
+
 
         foreach($modules as $module){
             if($module->getModule()->getParent() != 0)

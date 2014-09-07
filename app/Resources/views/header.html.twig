@@ -1,20 +1,40 @@
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container-fluid">
+        <a href="/"><img src="{{ asset('bundles/lunauser/images/logo2.png') }}" class="pull-left"
+                         alt="Hotel Luna Medjugorje"></a>
+        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
 
-<div class="container">
-    <div id="logo" class="col-md-8" >
-        <a href="/"><img src="{{ asset('bundles/lunauser/images/logo2.png') }}" alt="Hotel Luna Medjugorje"></a>
-    </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#">Dashboard</a></li>
+                    <li><a href="#">Settings</a></li>
+                    <li><a href="#">Profile</a></li>
 
-    {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-        <div class="btn-group" id="welcome-wrap">
-            <button type="button" class="btn btn-warning">
-                {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }}
-            </button>
+                            <div class="btn-group" id="welcome-wrap">
+                                <button type="button" class="btn btn-warning">
+                                    {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }}
+                                </button>
             <span class="input-group-btn">
                 <button class="btn btn-warning" type="button">
                     <a href="{{ path('fos_user_security_logout') }}">
-                    {{ 'layout.logout'|trans({}, 'FOSUserBundle') }} </a></button>
+                        {{ 'layout.logout'|trans({}, 'FOSUserBundle') }} </a></button>
             </span>
-        </div>
-    {% endif %}
+                            </div>
 
+                    </li>
+                </ul>
+                <form class="navbar-form navbar-right">
+                    <input type="text" class="form-control" placeholder="Search...">
+                </form>
+            </div>
+        {% endif %}
+    </div>
 </div>

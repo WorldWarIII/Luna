@@ -17,3 +17,8 @@ parameters:
     debug_toolbar:          true
     debug_redirects:        false
     use_assetic_controller: true
+
+
+    telephone: +387 36 654 940
+    fax: +387 36 654 949
+    email: lunamedjugorje@gmail.com

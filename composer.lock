@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "50da953751a8c718ef7a3fb85311b659",
+    "hash": "c9f49e27a500650acf9f7d3e9a7aa6e4",
     "packages": [
         {
             "name": "components/jquery",
@@ -682,17 +682,17 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfSymfony/FOSRestBundle.git",
-                "reference": "0649a4c1d8cecd27885b09c1cddddb497a0d3ca3"
+                "reference": "f35a33889b8295cd024a12b053ba0884f685e920"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSRestBundle/zipball/0649a4c1d8cecd27885b09c1cddddb497a0d3ca3",
-                "reference": "0649a4c1d8cecd27885b09c1cddddb497a0d3ca3",
+                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSRestBundle/zipball/f35a33889b8295cd024a12b053ba0884f685e920",
+                "reference": "f35a33889b8295cd024a12b053ba0884f685e920",
                 "shasum": ""
             },
             "require": {
-                "doctrine/inflector": "1.0.*",
-                "php": ">=5.3.2",
+                "doctrine/inflector": "~1.0",
+                "php": ">=5.3.9",
                 "psr/log": "~1.0",
                 "symfony/framework-bundle": "~2.2",
                 "willdurand/jsonp-callback-validator": "~1.0",
@@ -720,7 +720,7 @@
             "type": "symfony-bundle",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.4-dev"
+                    "dev-master": "1.5-dev"
                 }
             },
             "autoload": {
@@ -751,7 +751,7 @@
             "keywords": [
                 "rest"
             ],
-            "time": "2014-08-15 12:18:54"
+            "time": "2014-08-22 07:37:22"
         },
         {
             "name": "friendsofsymfony/user-bundle",
@@ -760,12 +760,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfSymfony/FOSUserBundle.git",
-                "reference": "27a84cec3ea4daa32cd6fe308c0847ca9644f588"
+                "reference": "094bea6f318fbb067db3ddf6d26a62af0bf13442"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSUserBundle/zipball/27a84cec3ea4daa32cd6fe308c0847ca9644f588",
-                "reference": "27a84cec3ea4daa32cd6fe308c0847ca9644f588",
+                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSUserBundle/zipball/094bea6f318fbb067db3ddf6d26a62af0bf13442",
+                "reference": "094bea6f318fbb067db3ddf6d26a62af0bf13442",
                 "shasum": ""
             },
             "require": {
@@ -819,7 +819,7 @@
             "keywords": [
                 "User management"
             ],
-            "time": "2014-08-04 23:04:17"
+            "time": "2014-08-23 11:32:38"
         },
         {
             "name": "incenteev/composer-parameter-handler",
@@ -2303,16 +2303,16 @@
         },
         {
             "name": "twitter/bootstrap",
-            "version": "v3.2.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twbs/bootstrap.git",
-                "reference": "c068162161154a4b85110ea1e7dd3d7897ce2b72"
+                "reference": "1517bea4e272935a31fdc0caaa9a924bb8346ca3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twbs/bootstrap/zipball/c068162161154a4b85110ea1e7dd3d7897ce2b72",
-                "reference": "c068162161154a4b85110ea1e7dd3d7897ce2b72",
+                "url": "https://api.github.com/repos/twbs/bootstrap/zipball/1517bea4e272935a31fdc0caaa9a924bb8346ca3",
+                "reference": "1517bea4e272935a31fdc0caaa9a924bb8346ca3",
                 "shasum": ""
             },
             "replace": {
@@ -2350,7 +2350,7 @@
                 "responsive",
                 "web"
             ],
-            "time": "2014-06-26 16:36:48"
+            "time": "2014-08-25 00:18:58"
         },
         {
             "name": "willdurand/jsonp-callback-validator",
@@ -2503,6 +2503,7 @@
         "friendsofsymfony/user-bundle": 20,
         "friendsofsymfony/rest-bundle": 20,
         "jms/serializer-bundle": 20,
+        "twitter/bootstrap": 20,
         "components/jquery": 20
     },
     "prefer-stable": false,

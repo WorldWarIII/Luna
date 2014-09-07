@@ -80,6 +80,8 @@
 
   Alert.VERSION = '3.2.0'
 
+  Alert.TRANSITION_DURATION = 150
+
   Alert.prototype.close = function (e) {
     var $this    = $(this)
     var selector = $this.attr('data-target')
@@ -94,7 +96,7 @@
     if (e) e.preventDefault()
 
     if (!$parent.length) {
-      $parent = $this.hasClass('alert') ? $this : $this.parent()
+      $parent = $this.closest('.alert')
     }
 
     $parent.trigger(e = $.Event('close.bs.alert'))
@@ -111,7 +113,7 @@
     $.support.transition && $parent.hasClass('fade') ?
       $parent
         .one('bsTransitionEnd', removeElement)
-        .emulateTransitionEnd(150) :
+        .emulateTransitionEnd(Alert.TRANSITION_DURATION) :
       removeElement()
   }
 
@@ -185,6 +187,9 @@
 
   Modal.VERSION  = '3.2.0'
 
+  Modal.TRANSITION_DURATION = 300
+  Modal.BACKDROP_TRANSITION_DURATION = 150
+
   Modal.DEFAULTS = {
     backdrop: true,
     keyboard: true,
@@ -241,7 +246,7 @@
           .one('bsTransitionEnd', function () {
             that.$element.trigger('focus').trigger(e)
           })
-          .emulateTransitionEnd(300) :
+          .emulateTransitionEnd(Modal.TRANSITION_DURATION) :
         that.$element.trigger('focus').trigger(e)
     })
   }
@@ -272,7 +277,7 @@
     $.support.transition && this.$element.hasClass('fade') ?
       this.$element
         .one('bsTransitionEnd', $.proxy(this.hideModal, this))
-        .emulateTransitionEnd(300) :
+        .emulateTransitionEnd(Modal.TRANSITION_DURATION) :
       this.hideModal()
   }
 
@@ -288,11 +293,11 @@
 
   Modal.prototype.escape = function () {
     if (this.isShown && this.options.keyboard) {
-      this.$element.on('keyup.dismiss.bs.modal', $.proxy(function (e) {
+      this.$element.on('keydown.dismiss.bs.modal', $.proxy(function (e) {
         e.which == 27 && this.hide()
       }, this))
     } else if (!this.isShown) {
-      this.$element.off('keyup.dismiss.bs.modal')
+      this.$element.off('keydown.dismiss.bs.modal')
     }
   }
 
@@ -319,7 +324,7 @@
       this.$backdrop = $('<div class="modal-backdrop ' + animate + '" />')
         .appendTo(this.$body)
 
-      this.$element.on('click.dismiss.bs.modal', $.proxy(function (e) {
+      this.$element.on('mousedown.dismiss.bs.modal', $.proxy(function (e) {
         if (e.target !== e.currentTarget) return
         this.options.backdrop == 'static'
           ? this.$element[0].focus.call(this.$element[0])
@@ -335,7 +340,7 @@
       doAnimate ?
         this.$backdrop
           .one('bsTransitionEnd', callback)
-          .emulateTransitionEnd(150) :
+          .emulateTransitionEnd(Modal.BACKDROP_TRANSITION_DURATION) :
         callback()
 
     } else if (!this.isShown && this.$backdrop) {
@@ -348,7 +353,7 @@
       $.support.transition && this.$element.hasClass('fade') ?
         this.$backdrop
           .one('bsTransitionEnd', callbackRemove)
-          .emulateTransitionEnd(150) :
+          .emulateTransitionEnd(Modal.BACKDROP_TRANSITION_DURATION) :
         callbackRemove()
 
     } else if (callback) {
@@ -476,7 +481,9 @@
 
       if (e.isDefaultPrevented()) return
 
-      $this.trigger('focus')
+      $this
+        .trigger('focus')
+        .attr('aria-expanded', 'true')
 
       $parent
         .toggleClass('open')
@@ -522,11 +529,17 @@
     if (e && e.which === 3) return
     $(backdrop).remove()
     $(toggle).each(function () {
-      var $parent = getParent($(this))
+      var $this         = $(this)
+      var $parent       = getParent($this)
       var relatedTarget = { relatedTarget: this }
+
       if (!$parent.hasClass('open')) return
+
       $parent.trigger(e = $.Event('hide.bs.dropdown', relatedTarget))
+
       if (e.isDefaultPrevented()) return
+
+      $this.attr('aria-expanded', 'false')
       $parent.removeClass('open').trigger('hidden.bs.dropdown', relatedTarget)
     })
   }
@@ -776,6 +789,8 @@
 
   Tab.VERSION = '3.2.0'
 
+  Tab.TRANSITION_DURATION = 150
+
   Tab.prototype.show = function () {
     var $this    = this.element
     var $ul      = $this.closest('ul:not(.dropdown-menu)')
@@ -812,7 +827,7 @@
     var $active    = container.find('> .active')
     var transition = callback
       && $.support.transition
-      && $active.hasClass('fade')
+      && (($active.length && $active.hasClass('fade')) || !!container.find('> .fade').length)
 
     function next() {
       $active
@@ -836,10 +851,10 @@
       callback && callback()
     }
 
-    transition ?
+    $active.length && transition ?
       $active
         .one('bsTransitionEnd', next)
-        .emulateTransitionEnd(150) :
+        .emulateTransitionEnd(Tab.TRANSITION_DURATION) :
       next()
 
     $active.removeClass('in')
@@ -912,6 +927,8 @@
   }
 
   Tooltip.VERSION  = '3.2.0'
+
+  Tooltip.TRANSITION_DURATION = 150
 
   Tooltip.DEFAULTS = {
     animation: true,
@@ -1093,7 +1110,7 @@
       $.support.transition && this.$tip.hasClass('fade') ?
         $tip
           .one('bsTransitionEnd', complete)
-          .emulateTransitionEnd(150) :
+          .emulateTransitionEnd(Tooltip.TRANSITION_DURATION) :
         complete()
     }
   }
@@ -1181,7 +1198,7 @@
     $.support.transition && this.$tip.hasClass('fade') ?
       $tip
         .one('bsTransitionEnd', complete)
-        .emulateTransitionEnd(150) :
+        .emulateTransitionEnd(Tooltip.TRANSITION_DURATION) :
       complete()
 
     this.hoverState = null
@@ -1202,13 +1219,20 @@
 
   Tooltip.prototype.getPosition = function ($element) {
     $element   = $element || this.$element
+
     var el     = $element[0]
     var isBody = el.tagName == 'BODY'
-    return $.extend({}, (typeof el.getBoundingClientRect == 'function') ? el.getBoundingClientRect() : null, {
-      scroll: isBody ? document.documentElement.scrollTop || document.body.scrollTop : $element.scrollTop(),
+    var isSvg  = window.SVGElement && el instanceof window.SVGElement
+
+    var elRect    = el.getBoundingClientRect()
+    var elOffset  = isBody ? { top: 0, left: 0 } : $element.offset()
+    var scroll    = { scroll: isBody ? document.documentElement.scrollTop || document.body.scrollTop : $element.scrollTop() }
+    var outerDims = isSvg ? {} : {
       width:  isBody ? $(window).width()  : $element.outerWidth(),
       height: isBody ? $(window).height() : $element.outerHeight()
-    }, isBody ? { top: 0, left: 0 } : $element.offset())
+    }
+
+    return $.extend({}, elRect, scroll, outerDims, elOffset)
   }
 
   Tooltip.prototype.getCalculatedOffset = function (placement, pos, actualWidth, actualHeight) {
@@ -1390,7 +1414,7 @@
     var content = this.getContent()
 
     $tip.find('.popover-title')[this.options.html ? 'html' : 'text'](title)
-    $tip.find('.popover-content').empty()[ // we use append for html objects to maintain js events
+    $tip.find('.popover-content').children().detach().end()[ // we use append for html objects to maintain js events
       this.options.html ? (typeof content == 'string' ? 'html' : 'append') : 'text'
     ](content)
 
@@ -1558,12 +1582,16 @@
   // BUTTON DATA-API
   // ===============
 
-  $(document).on('click.bs.button.data-api', '[data-toggle^="button"]', function (e) {
-    var $btn = $(e.target)
-    if (!$btn.hasClass('btn')) $btn = $btn.closest('.btn')
-    Plugin.call($btn, 'toggle')
-    e.preventDefault()
-  })
+  $(document)
+    .on('click.bs.button.data-api', '[data-toggle^="button"]', function (e) {
+      var $btn = $(e.target)
+      if (!$btn.hasClass('btn')) $btn = $btn.closest('.btn')
+      Plugin.call($btn, 'toggle')
+      e.preventDefault()
+    })
+    .on('focus.bs.button.data-api blur.bs.button.data-api', '[data-toggle^="button"]', function (e) {
+      $(e.target).closest('.btn').toggleClass('focus', e.type == 'focus')
+    })
 
 }(jQuery);
 
@@ -1592,6 +1620,8 @@
   }
 
   Collapse.VERSION  = '3.2.0'
+
+  Collapse.TRANSITION_DURATION = 350
 
   Collapse.DEFAULTS = {
     toggle: true
@@ -1641,7 +1671,7 @@
 
     this.$element
       .one('bsTransitionEnd', $.proxy(complete, this))
-      .emulateTransitionEnd(350)[dimension](this.$element[0][scrollSize])
+      .emulateTransitionEnd(Collapse.TRANSITION_DURATION)[dimension](this.$element[0][scrollSize])
   }
 
   Collapse.prototype.hide = function () {
@@ -1657,8 +1687,7 @@
 
     this.$element
       .addClass('collapsing')
-      .removeClass('collapse')
-      .removeClass('in')
+      .removeClass('collapse in')
 
     this.transitioning = 1
 
@@ -1675,7 +1704,7 @@
     this.$element
       [dimension](0)
       .one('bsTransitionEnd', $.proxy(complete, this))
-      .emulateTransitionEnd(350)
+      .emulateTransitionEnd(Collapse.TRANSITION_DURATION)
   }
 
   Collapse.prototype.toggle = function () {
@@ -1692,7 +1721,7 @@
       var data    = $this.data('bs.collapse')
       var options = $.extend({}, Collapse.DEFAULTS, $this.data(), typeof option == 'object' && option)
 
-      if (!data && options.toggle && option == 'show') option = !option
+      if (!data && options.toggle && option == 'show') options.toggle = false
       if (!data) $this.data('bs.collapse', (data = new Collapse(this, options)))
       if (typeof option == 'string') data[option]()
     })
@@ -1730,7 +1759,7 @@
 
     if (!data || !data.transitioning) {
       if ($parent) $parent.find('[data-toggle="collapse"][data-parent="' + parent + '"]').not($this).addClass('collapsed')
-      $this[$target.hasClass('in') ? 'addClass' : 'removeClass']('collapsed')
+      $this.toggleClass('collapsed', $target.hasClass('in'))
     }
 
     Plugin.call($target, option)
@@ -1770,6 +1799,8 @@
 
   Carousel.VERSION  = '3.2.0'
 
+  Carousel.TRANSITION_DURATION = 600
+
   Carousel.DEFAULTS = {
     interval: 5000,
     pause: 'hover',
@@ -1803,6 +1834,13 @@
     return this.$items.index(item || this.$active)
   }
 
+  Carousel.prototype.getItemForDirection = function (direction, active) {
+    var delta = direction == 'prev' ? -1 : 1
+    var activeIndex = this.getItemIndex(active)
+    var itemIndex = (activeIndex + delta) % this.$items.length
+    return this.$items.eq(itemIndex)
+  }
+
   Carousel.prototype.to = function (pos) {
     var that        = this
     var activeIndex = this.getItemIndex(this.$active = this.$element.find('.item.active'))
@@ -1812,7 +1850,7 @@
     if (this.sliding)       return this.$element.one('slid.bs.carousel', function () { that.to(pos) }) // yes, "slid"
     if (activeIndex == pos) return this.pause().cycle()
 
-    return this.slide(pos > activeIndex ? 'next' : 'prev', $(this.$items[pos]))
+    return this.slide(pos > activeIndex ? 'next' : 'prev', this.$items.eq(pos))
   }
 
   Carousel.prototype.pause = function (e) {
@@ -1840,7 +1878,7 @@
 
   Carousel.prototype.slide = function (type, next) {
     var $active   = this.$element.find('.item.active')
-    var $next     = next || $active[type]()
+    var $next     = next || this.getItemForDirection(type, $active)
     var isCycling = this.interval
     var direction = type == 'next' ? 'left' : 'right'
     var fallback  = type == 'next' ? 'first' : 'last'
@@ -1886,7 +1924,7 @@
             that.$element.trigger(slidEvent)
           }, 0)
         })
-        .emulateTransitionEnd($active.css('transition-duration').slice(0, -1) * 1000)
+        .emulateTransitionEnd(Carousel.TRANSITION_DURATION)
     } else {
       $active.removeClass('active')
       $next.addClass('active')
@@ -2001,6 +2039,28 @@
     target: window
   }
 
+  Affix.prototype.getState = function (scrollHeight, height, offsetTop, offsetBottom) {
+    var scrollTop    = this.$target.scrollTop()
+    var position     = this.$element.offset()
+    var targetHeight = this.$target.height()
+
+    if (offsetTop != null && this.affixed == 'top') return scrollTop < offsetTop ? 'top' : false
+
+    if (this.affixed == 'bottom') {
+      if (offsetTop != null) return (scrollTop + this.unpin <= position.top) ? false : 'bottom'
+      return (scrollTop + targetHeight <= scrollHeight - offsetBottom) ? false : 'bottom'
+    }
+
+    var initializing   = this.affixed == null
+    var colliderTop    = initializing ? scrollTop : position.top
+    var colliderHeight = initializing ? targetHeight : height
+
+    if (offsetTop != null && colliderTop <= offsetTop) return 'top'
+    if (offsetBottom != null && (colliderTop + colliderHeight >= scrollHeight - offsetBottom)) return 'bottom'
+
+    return false
+  }
+
   Affix.prototype.getPinnedOffset = function () {
     if (this.pinnedOffset) return this.pinnedOffset
     this.$element.removeClass(Affix.RESET).addClass('affix')
@@ -2016,42 +2076,40 @@
   Affix.prototype.checkPosition = function () {
     if (!this.$element.is(':visible')) return
 
-    var scrollHeight = $(document).height()
-    var scrollTop    = this.$target.scrollTop()
-    var position     = this.$element.offset()
+    var height       = this.$element.height()
     var offset       = this.options.offset
     var offsetTop    = offset.top
     var offsetBottom = offset.bottom
+    var scrollHeight = $('body').height()
 
     if (typeof offset != 'object')         offsetBottom = offsetTop = offset
     if (typeof offsetTop == 'function')    offsetTop    = offset.top(this.$element)
     if (typeof offsetBottom == 'function') offsetBottom = offset.bottom(this.$element)
 
-    var affix = this.unpin   != null && (scrollTop + this.unpin <= position.top) ? false :
-                offsetBottom != null && (position.top + this.$element.height() >= scrollHeight - offsetBottom) ? 'bottom' :
-                offsetTop    != null && (scrollTop <= offsetTop) ? 'top' : false
+    var affix = this.getState(scrollHeight, height, offsetTop, offsetBottom)
 
-    if (this.affixed === affix) return
-    if (this.unpin != null) this.$element.css('top', '')
+    if (this.affixed != affix) {
+      if (this.unpin != null) this.$element.css('top', '')
 
-    var affixType = 'affix' + (affix ? '-' + affix : '')
-    var e         = $.Event(affixType + '.bs.affix')
+      var affixType = 'affix' + (affix ? '-' + affix : '')
+      var e         = $.Event(affixType + '.bs.affix')
 
-    this.$element.trigger(e)
+      this.$element.trigger(e)
 
-    if (e.isDefaultPrevented()) return
+      if (e.isDefaultPrevented()) return
 
-    this.affixed = affix
-    this.unpin = affix == 'bottom' ? this.getPinnedOffset() : null
+      this.affixed = affix
+      this.unpin = affix == 'bottom' ? this.getPinnedOffset() : null
 
-    this.$element
-      .removeClass(Affix.RESET)
-      .addClass(affixType)
-      .trigger($.Event(affixType.replace('affix', 'affixed')))
+      this.$element
+        .removeClass(Affix.RESET)
+        .addClass(affixType)
+        .trigger(affixType.replace('affix', 'affixed') + '.bs.affix')
+    }
 
     if (affix == 'bottom') {
       this.$element.offset({
-        top: scrollHeight - this.$element.height() - offsetBottom
+        top: scrollHeight - height - offsetBottom
       })
     }
   }

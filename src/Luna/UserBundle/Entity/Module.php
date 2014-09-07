@@ -52,6 +52,12 @@ class Module
      */
     private $userModules;
 
+    /**
+     * @var integer
+     * @ORM\Column(name="priority", type="integer")
+     */
+    private $priority;
+
 
     /**
      * Constructor
@@ -157,6 +163,20 @@ class Module
         return $this->userModules;
     }
 
+    /**
+     * @param int $priority
+     */
+    public function setPriority($priority)
+    {
+        $this->priority = $priority;
+    }
 
+    /**
+     * @return int
+     */
+    public function getPriority()
+    {
+        return $this->priority;
+    }
 
 }

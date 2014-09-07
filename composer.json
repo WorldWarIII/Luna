@@ -22,7 +22,7 @@
         "friendsofsymfony/rest-bundle": "dev-master",
         "jms/serializer-bundle": "dev-master",
         "oyejorge/less.php": "~1.5",
-        "twitter/bootstrap": "*",
+        "twitter/bootstrap": "dev-master",
         "components/jquery": "dev-master",
         "knplabs/knp-menu-bundle": "~2.0"
     },

@@ -24,6 +24,7 @@ class AppKernel extends Kernel
             new Luna\UserBundle\LunaUserBundle(),
             new Luna\ReceptionBundle\LunaReceptionBundle(),
             new Luna\ApplicationBundle\LunaApplicationBundle(),
+            new Luna\CostManagementBundle\LunaCostManagementBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

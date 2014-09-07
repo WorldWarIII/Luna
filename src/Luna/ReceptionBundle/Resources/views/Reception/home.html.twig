@@ -1,6 +1,10 @@
 {% extends "::base.html.twig" %}
 
-{% block body %}
+{% block content %}
 
-   Welcome to reception ....
+    {% for module in modules %}
+        <a href="{{ path(module.route ) }}" >{{ module.name }}</a>
+    {% endfor %}
+
+
 {% endblock %}

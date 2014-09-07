@@ -1,0 +1,3 @@
+luna_cost_management_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: LunaCostManagementBundle:Default:index }

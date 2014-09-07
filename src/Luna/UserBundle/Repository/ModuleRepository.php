@@ -17,14 +17,28 @@ class ModuleRepository extends EntityRepository {
         return $this->getEntityManager()
             ->createQuery('SELECT m FROM LunaUserBundle:Module m
                            WHERE m.parent = 0
+                           ORDER BY m.priority DESC
             ')
             ->getResult();
     }
 
-    public function findAllSubModules()
+    public function findAllUserModulesByPriority($user)
     {
         return $this->getEntityManager()
-            ->createQuery('SELECT m FROM LunaUserBundle:SubModule m')
+            ->createQuery('SELECT m,mu,u FROM LunaUserBundle:Module m
+                           JOIN m.userModule um
+                           JOIN m.user
+                           WHERE m.parent = 0 and u = $user
+                           ORDER BY m.priority DESC
+            ')
+            ->getResult();
+    }
+
+    public function findAllSubModules($id)
+    {
+        return $this->getEntityManager()
+            ->createQuery('SELECT m FROM LunaUserBundle:Module m
+                            WHERE m.parent = 1')
             ->getResult();
     }
 } 
